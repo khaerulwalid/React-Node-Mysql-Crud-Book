@@ -26,6 +26,29 @@ class Model {
 
             return getBooks
     }
+
+    static async PostBook(title, desc, cover) {
+        try {
+            const qPost = "INSERT INTO `wall_db`.`books` (`title`, `desc`, `cover`) VALUES (?);"
+            const values = [title, desc, cover]
+
+            let postBook = (() => {
+                return new Promise((resolve, reject) => {
+                    db.query(qPost, [values], (err, data) => {
+                        if(err) {
+                            reject(new Error(err))
+                        } else if (data) {
+                            resolve("Data book has been saved")
+                        }
+                    })
+                })
+            })()
+            
+            return postBook
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 
